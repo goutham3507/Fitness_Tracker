@@ -1,30 +1,25 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'screens/home_screen.dart';
-import 'screens/workout_log_screen.dart';
-import 'screens/meal_planning_screen.dart';
-import 'screens/progress_screen.dart';
-import 'screens/profile_screen.dart';
-import 'screens/main_navigation_screen.dart';
+import 'package:flutter_instagram_clone/auth/mainpage.dart';
+import 'package:flutter_instagram_clone/firebase_options.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
-  runApp(FitnessTrackerApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
-class FitnessTrackerApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fitness Tracker',
-      theme: appTheme,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => MainNavigationScreen(),
-        '/workout': (context) => WorkoutLogScreen(),
-        '/meal': (context) => MealPlanningScreen(),
-        '/progress': (context) => ProgressScreen(),
-        '/profile': (context) => ProfileScreen(),
-      },
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ScreenUtilInit(designSize: Size(375, 812), child: MainPage()),
     );
   }
 }
